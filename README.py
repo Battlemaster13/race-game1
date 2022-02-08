@@ -1,1 +1,1 @@
-# race-game1
+print('liel')
