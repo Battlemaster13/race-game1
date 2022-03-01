@@ -18,11 +18,11 @@ car_image = pygame.transform.scale(car_image, (200, 140))
 clock = pygame.time.Clock()
 
 
-car_x = WINDOW_W /2
+car_x = WINDOW_W /2 - 102
 car_y = WINDOW_H - 140
 
 x_step = 10
-laser_list = []
+
 play = True
 
 
@@ -33,6 +33,11 @@ screen.blit(textsurface,(10,20))
 
 while play:
   screen.blit(bk_image,(0,0))
+  keys = pygame.key.get_pressed()
+  if keys[pygame.K_LEFT]:
+    car_x -= x_step
+  if keys[pygame.K_RIGHT]:
+    car_x += x_step
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       play = False
@@ -41,7 +46,7 @@ while play:
           car_x -= x_step
       if event.key == pygame.K_RIGHT:
         car_x += x_step
-
+  
 
   screen.blit(car_image,(car_x,car_y))
   textsurface = myfont.render('Score:'+str(score), True, (255, 255, 255))
@@ -51,7 +56,7 @@ while play:
   pygame.display.flip()
 
 
-  clock.tick(10)
+  clock.tick(40)
 
 pygame.quit()
 
