@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # screen size 
 WINDOW_W = 840
@@ -25,6 +26,9 @@ x_step = 10
 
 play = True
 
+# להמשיך אחר כך
+# def car_spawn():
+#   enemy_car_x = random.randint(70,577)
 
 myfont = pygame.font.SysFont('Comic Sans MS', 30)
 textsurface = myfont.render('Score:', True, (255, 255, 255))
@@ -33,6 +37,8 @@ screen.blit(textsurface,(10,20))
 
 while play:
   screen.blit(bk_image,(0,0))
+  if car_x >= 577 or car_x <= 70 :
+    play = False
   keys = pygame.key.get_pressed()
   if keys[pygame.K_LEFT]:
     car_x -= x_step
@@ -41,12 +47,10 @@ while play:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       play = False
-    elif event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_LEFT:
-          car_x -= x_step
-      if event.key == pygame.K_RIGHT:
-        car_x += x_step
+
   
+  pygame.draw.line(screen, (255,255,255), (133, 0), (133,650), 4)
+
 
   screen.blit(car_image,(car_x,car_y))
   textsurface = myfont.render('Score:'+str(score), True, (255, 255, 255))
@@ -56,7 +60,7 @@ while play:
   pygame.display.flip()
 
 
-  clock.tick(40)
+  clock.tick(45)
 
 pygame.quit()
 
