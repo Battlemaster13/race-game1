@@ -1,5 +1,6 @@
 import pygame
 import random
+from pygame.locals import *
 
 # screen size 
 WINDOW_W = 840
@@ -14,10 +15,14 @@ pygame.display.set_caption("My First Game")
 # www.pngaaa.com
 bk_image = pygame.image.load("background.png")
 car_image = pygame.image.load("car.png")
-car_image = pygame.transform.scale(car_image, (200, 140))  
+car_image = pygame.transform.scale(car_image, (200, 140)) 
+white = (255, 255, 255)
+velocity = 0 
 
 clock = pygame.time.Clock()
 
+backgroundx = 0
+backgroundy = 0
 
 car_x = WINDOW_W /2 - 102
 car_y = WINDOW_H - 140
@@ -33,9 +38,10 @@ play = True
 myfont = pygame.font.SysFont('Comic Sans MS', 30)
 textsurface = myfont.render('Score:', True, (255, 255, 255))
 screen.blit(textsurface,(10,20))
-
+time = 0
 
 while play:
+
   screen.blit(bk_image,(0,0))
   if car_x >= 577 or car_x <= 70 :
     play = False
@@ -47,7 +53,13 @@ while play:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       play = False
-
+    if event.type == KEYDOWN:
+      if event.key == K_UP:
+         velocity = 5
+  
+  backgroundy = backgroundy + velocity
+  if backgroundy == 600:
+        backgroundy = 0
   
   pygame.draw.line(screen, (255,255,255), (133, 0), (133,650), 4)
 
@@ -55,7 +67,8 @@ while play:
   screen.blit(car_image,(car_x,car_y))
   textsurface = myfont.render('Score:'+str(score), True, (255, 255, 255))
   screen.blit(textsurface,(10,20))
- 
+  screen.blit(bk_image, [backgroundx, backgroundy - 600])
+  screen.blit(bk_image, [backgroundx, backgroundy])
   
   pygame.display.flip()
 
