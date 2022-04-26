@@ -15,6 +15,7 @@ pygame.display.set_caption("My First Game")
 # www.pngaaa.com
 bk_image = pygame.image.load("background.png")
 car_image = pygame.image.load("car.png")
+enemy_car = pygame.image.load("enemy.car.png")
 car_image = pygame.transform.scale(car_image, (200, 136)) 
 white = (255, 255, 255)
 velocity = 0 
@@ -24,8 +25,8 @@ clock = pygame.time.Clock()
 backgroundx = 0
 backgroundy = 0
 
-# enemy_car_x = random.randint(70,577)
-# enemy_car_y = 0
+enemy_car_x = 150
+enemy_car_y = -150
 
 car_x = WINDOW_W /2 - 102
 car_y = WINDOW_H - 140
@@ -62,10 +63,13 @@ while play:
   backgroundy = backgroundy + velocity
   if backgroundy == 600:
         backgroundy = 0
+       
   
-  # enemy_car_y = enemy_car_y + velocity
-  # if enemy_car_y == 600:
-  #       enemy_car_y = 0
+  enemy_car_y = enemy_car_y + velocity
+  if enemy_car_y == 700:
+        enemy_car_y = -300
+        enemy_car_x = random.randint(150,500)
+        
    
   
   pygame.draw.line(screen, (255,255,255), (133, 0), (133,650), 4)
@@ -74,8 +78,8 @@ while play:
   screen.blit(textsurface,(10,20))
   screen.blit(bk_image, [backgroundx, backgroundy - 600])
   screen.blit(bk_image, [backgroundx, backgroundy])
-  # screen.blit(bk_image, [backgroundx, backgroundy - 600])
-  # screen.blit(bk_image, [backgroundx, backgroundy])
+  screen.blit(enemy_car, [enemy_car_x, enemy_car_y - (800)])
+  screen.blit(enemy_car, [enemy_car_x, enemy_car_y])
   screen.blit(car_image,(car_x,car_y)) 
   
   pygame.display.flip()
