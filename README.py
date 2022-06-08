@@ -45,9 +45,26 @@ gameDisplay.blit(backgroundImage, (0, 0))
 def quitgame():
     pygame.quit()
     quit()
-
+def bilt():
+  screen.blit(textsurface,(10,20))
+  screen.blit(backgroundImage, [backgroundx, backgroundy - 600])
+  screen.blit(backgroundImage, [backgroundx, backgroundy])
+  screen.blit(enemy_car, [enemy_car_x, enemy_car_y - (800)])
+  screen.blit(enemy_car, [enemy_car_x, enemy_car_y])
+  screen.blit(car_image,(car_x,car_y)) 
 clock = pygame.time.Clock()
-
+def fingers():
+      #credit ziv1004ri
+    index_finger1_y1 = multiLandMarks[0].landmark[8].y
+    index_finger1_y2 = multiLandMarks[0].landmark[5].y
+    index_finger2_y1 = multiLandMarks[0].landmark[12].y
+    index_finger2_y2 = multiLandMarks[0].landmark[9].y
+    index_finger3_y1 = multiLandMarks[0].landmark[16].y
+    index_finger3_y2 = multiLandMarks[0].landmark[13].y
+    index_finger4_y1 = multiLandMarks[0].landmark[20].y
+    index_finger4_y2 = multiLandMarks[0].landmark[17].y
+    if index_finger1_y1 < index_finger1_y2 and index_finger2_y1 < index_finger2_y2 and index_finger3_y1 > index_finger3_y2 and index_finger4_y1 > index_finger4_y2:
+      quitgame()
 backgroundx = 0
 backgroundy = 0
 
@@ -76,6 +93,7 @@ while play:
     for handLms in multiLandMarks:
       mpDraw.draw_landmarks(frame, handLms, mp_Hands.HAND_CONNECTIONS)
     index_finger_x = multiLandMarks[0].landmark[8].x
+    fingers()
     if index_finger_x > 0 :
       print(index_finger_x)
 
@@ -83,9 +101,9 @@ while play:
       play = False
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] or index_finger_x < 0.33:
-      car_x -= x_step
-    if keys[pygame.K_RIGHT] or index_finger_x > 0.66:
       car_x += x_step
+    if keys[pygame.K_RIGHT] or index_finger_x > 0.66:
+      car_x -= x_step
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         play = False
@@ -105,18 +123,14 @@ while play:
     if enemy_car_y == 700:
           enemy_car_y = -300
           enemy_car_x = random.randint(150,500)
-          
+    
     
     
     pygame.draw.line(screen, (255,255,255), (133, 0), (133,650), 4)
 
     textsurface = myfont.render('Score:'+str(score), True, (255, 255, 255))
-    screen.blit(textsurface,(10,20))
-    screen.blit(backgroundImage, [backgroundx, backgroundy - 600])
-    screen.blit(backgroundImage, [backgroundx, backgroundy])
-    screen.blit(enemy_car, [enemy_car_x, enemy_car_y - (800)])
-    screen.blit(enemy_car, [enemy_car_x, enemy_car_y])
-    screen.blit(car_image,(car_x,car_y)) 
+    bring_handto_place = myfont.render('hand not in right place', True, (255, 255, 255))
+    bilt()
 
 
   pygame.display.flip()
